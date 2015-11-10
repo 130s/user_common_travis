@@ -18,4 +18,4 @@ env:
   matrix:
   - ROS_DISTRO=indigo USE_DEB=true ROS_PARALLEL_JOBS="-j8"
 #  - ROS_DISTRO=indigo USE_DEB=false ROS_PARALLEL_JOBS="-j8" NOT_TEST_INSTALL="true"
-script: source .travis/travis.sh
+script: source .ci_config/travis.sh
