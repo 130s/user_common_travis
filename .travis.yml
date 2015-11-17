@@ -1,8 +1,6 @@
-language:
-  - cpp
-  - python
-python:
-  - "2.7"
+sudo: required 
+dist: trusty 
+language: generic 
 compiler:
   - gcc
 notifications:
@@ -11,6 +9,16 @@ notifications:
     on_failure: always
     recipients:
       - 130s@2000.jukuin.keio.ac.jp
+env:
+  matrix:
+    - USE_DEB=true  ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu
+    - USE_DEB=true  ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros-shadow-fixed/ubuntu
+matrix:
+  allow_failures:
+    - env: USE_DEB=false ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu
+    - env: USE_DEB=false ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros-shadow-fixed/ubuntu
+    - env: USE_DEB=true  ROS_DISTRO="jade"   ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu
+    - env: USE_DEB=true  ROS_DISTRO="jade"   ROS_REPOSITORY_PATH=http://packages.ros.org/ros-shadow-fixed/ubuntu
 script: 
   - source .ci_config/travis.sh
   - source ./travis.sh
