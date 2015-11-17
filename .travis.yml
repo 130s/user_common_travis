@@ -12,3 +12,4 @@ notifications:
     recipients:
       - 130s@2000.jukuin.keio.ac.jp
 script: source .ci_config/travis.sh
+script: source ./travis.sh
