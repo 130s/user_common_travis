@@ -1,3 +1,0 @@
-[submodule ".ci_config"]
-	path = .ci_config
-	url = https://github.com/130s/common_travis.git
