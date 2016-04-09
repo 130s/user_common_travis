@@ -24,8 +24,15 @@ install:
 script: 
   - source .ci_config/travis.sh
   - source ./travis.sh
+  - FILENAME_ARTIFACT=artifacts_test.log
   - touch artifacts_test.log  # Temporary file to see if a created file gets uploaded to S3.
 addons:
   artifacts:
     bucket: live-cd
     s3_region: "us-west-1"  # defaults to "us-east-1"
+  paths:
+    # arbitrary shell commands are supported, but the output should be
+    # converted to a ':'-delimited string.
+    ##- $(ls /var/log/*.log | tr "\n" ":")
+    # singular paths work fine, too
+    - $FILENAME_ARTIFACT
