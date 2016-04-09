@@ -12,15 +12,27 @@ notifications:
 env:
   matrix:
     - USE_DEB=true  ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu
-    - USE_DEB=true  ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros-shadow-fixed/ubuntu
-matrix:
-  allow_failures:
-    - env: USE_DEB=false ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu
-    - env: USE_DEB=false ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros-shadow-fixed/ubuntu
-    - env: USE_DEB=true  ROS_DISTRO="jade"   ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu
-    - env: USE_DEB=true  ROS_DISTRO="jade"   ROS_REPOSITORY_PATH=http://packages.ros.org/ros-shadow-fixed/ubuntu
+#    - USE_DEB=true  ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros-shadow-fixed/ubuntu
+#matrix:
+#  allow_failures:
+#    - env: USE_DEB=false ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu
+#    - env: USE_DEB=false ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros-shadow-fixed/ubuntu
+#    - env: USE_DEB=true  ROS_DISTRO="jade"   ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu
+#    - env: USE_DEB=true  ROS_DISTRO="jade"   ROS_REPOSITORY_PATH=http://packages.ros.org/ros-shadow-fixed/ubuntu
 install:
   - git clone https://github.com/ros-industrial/industrial_ci.git .ci_config
 script: 
   - source .ci_config/travis.sh
   - source ./travis.sh
+  - FILENAME_ARTIFACT=artifacts_test.log
+  - touch artifacts_test.log  # Temporary file to see if a created file gets uploaded to S3.
+addons:
+  artifacts:
+    bucket: live-cd
+    s3_region: "us-west-1"  # defaults to "us-east-1"
+  paths:
+    # arbitrary shell commands are supported, but the output should be
+    # converted to a ':'-delimited string.
+    ##- $(ls /var/log/*.log | tr "\n" ":")
+    # singular paths work fine, too
+    - $FILENAME_ARTIFACT
